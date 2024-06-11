@@ -24,11 +24,11 @@ import { ref, onMounted } from 'vue';
 import { loggedUser, setLoggedUser, clearLoggedUser } from '../states/loggedUser.js';
 import router from '../router/router.js';
 
-const HOST = 'https://back-pediline.onrender.com';
+const HOST = 'https//:back-pediline.onrender.com';
 const API_URL = `${HOST}/api/v1`;
 
-const email = ref('alice@example.com');
-const password = ref('password1');
+const email = ref('');
+const password = ref('');
 const error = ref('');
 
 const emit = defineEmits(['login']);

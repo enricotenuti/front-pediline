@@ -10,7 +10,7 @@
 </template>
 
 <script>
-const HOST = 'https://back-pediline.onrender.com/api/v1';
+const HOST = 'https//:back-pediline.onrender.com/api/v1';
 const LINE_URL = `${HOST}/lines`;
 const STOP_URL = `${HOST}/stops`;
 const SCHOOL_URL = `${HOST}/schools`;
@@ -20,7 +20,7 @@ export default {
   async mounted() {
     try {
       // Chiamata all'API per invalidare il token sul server
-      await fetch(HOST +'token/logout', {
+      await fetch('https//:back-pediline.onrender.com/api/v1/token/logout', {
         method: 'POST',
         credentials: 'include'
       });

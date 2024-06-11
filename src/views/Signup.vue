@@ -23,7 +23,7 @@
 </template>
 
 <script>
-const HOST = 'https://back-pediline.onrender.com/api/v1';
+const HOST = 'https//:back-pediline.onrender.com/api/v1';
 const LINE_URL = `${HOST}/lines`;
 const USER_URL = `${HOST}/users`;
 const STOP_URL = `${HOST}/stops`;
@@ -32,8 +32,8 @@ const TOKEN_URL = `${HOST}/token`;
 export default {
   data() {
     return {
-      email: 'ali@mai.com',
-      password: '123',
+      email: '',
+      password: '',
       role: 'Genitore',
       // name: '',
       // childName: '',

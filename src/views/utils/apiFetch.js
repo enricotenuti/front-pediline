@@ -1,6 +1,5 @@
-const HOST = 'https://back-pediline.onrender.com/api/v1';
+const HOST = 'https://back-pediline.onrender.com';
 import { setLoggedUser, loggedUser, getInfo } from '../../states/loggedUser.js';
-import Cookies from 'js-cookie';
 
 const API_ENDPOINTS = {
   LINE_URL: `${HOST}/lines`,
@@ -125,14 +124,8 @@ async function updateSchool(id, body){
 
 async function fetchToken() {
   try {
-    // Ottieni il token JWT dai cookies
-    let token = Cookies.get('jwt'); // Funzione per ottenere il token JWT dai cookies
-    console.log('Token:', token);
     const response = await fetch(API_ENDPOINTS.TOKEN_URL, {
       method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`
-      },
       credentials: 'include'
     });
 
@@ -140,7 +133,7 @@ async function fetchToken() {
     if (!data.success) {
       throw new Error(data.message);
     }
-    console.log('Dati utente:', data);
+    console.log('User info data:', data);
     if (data.loggedUser) {
       await fetchUserInfo(data);
       console.log('Dati utente:', data.loggedUser);
@@ -151,7 +144,6 @@ async function fetchToken() {
     // window.location.href = "/login"; 
   }
 }
-
 // ----------------------------------------- USER INFO
 
 async function fetchUserInfo(data) {
