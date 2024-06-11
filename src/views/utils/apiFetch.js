@@ -124,8 +124,14 @@ async function updateSchool(id, body){
 
 async function fetchToken() {
   try {
+    // Ottieni il token JWT dai cookies
+    const token = getJwtTokenFromCookie(); // Funzione per ottenere il token JWT dai cookies
+
     const response = await fetch(API_ENDPOINTS.TOKEN_URL, {
       method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
       credentials: 'include'
     });
 
@@ -144,6 +150,7 @@ async function fetchToken() {
     // window.location.href = "/login"; 
   }
 }
+
 // ----------------------------------------- USER INFO
 
 async function fetchUserInfo(data) {
