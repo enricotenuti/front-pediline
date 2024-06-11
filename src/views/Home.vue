@@ -105,7 +105,7 @@ import { loggedUser } from '@/states/loggedUser.js'
 import { fetchToken, fetchSchoolFromId, fetchLineFromId, fetchStopFromId } from './utils/apiFetch.js'
 
 const alerts = ref([]); // Initialize as an empty array
-
+const host = 'https://back-pediline.onrender.com';
 let mapCenter = ref([11.122068743015461, 46.06733230951298]);
 let mapZoom = ref(12);
 let mapColor = ref('');
@@ -150,7 +150,7 @@ async function setMapParameters() {
 
 async function fetchAlerts() {
   try {
-    const response = await fetch('http://localhost:3000/api/v1/alerts');
+    const response = await fetch(host+ '/api/v1/alerts');
     const data = await response.json();
     
     console.log('Fetched data:', data); // Debugging log
