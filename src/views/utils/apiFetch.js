@@ -1,5 +1,6 @@
 const HOST = 'https://back-pediline.onrender.com/api/v1';
 import { setLoggedUser, loggedUser, getInfo } from '../../states/loggedUser.js';
+import Cookies from 'js-cookie';
 
 const API_ENDPOINTS = {
   LINE_URL: `${HOST}/lines`,
