@@ -126,7 +126,9 @@ async function fetchToken() {
   try {
     const response = await fetch(API_ENDPOINTS.TOKEN_URL, {
       method: 'GET',
-      credentials: 'include'
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
+      }
     });
 
     const data = await response.json();
@@ -154,18 +156,18 @@ async function fetchUserInfo(data) {
   loggedUser.token = data.token;
 }
 
-async function updateUserInfo(id, body){
-  const response = await fetch(API_ENDPOINTS.USER_URL + `/${id}`, {
-      method: 'PUT',
-      headers: {
-          'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
+async function fetchUserInfo(data) {
+  const response = await fetch(API_ENDPOINTS.USER_URL + `?email=${data.loggedUser.email}`, {
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
+    }
   });
-  const data = await response.json();
-  console.log('User updated:', data);
-  return data;
+  const userInfo = await response.json();
+  //console.log('User info:', userInfo);
+  setLoggedUser(userInfo[0]);
+  loggedUser.token = data.token;
 }
+
 
 // ------------------------------------- STOPS AND LINES
 

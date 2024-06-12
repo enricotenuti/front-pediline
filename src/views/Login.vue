@@ -38,11 +38,12 @@ function login() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email: email.value, password: password.value }),
-    credentials: 'include' // Include cookies in the request
   })
     .then((resp) => resp.json())
     .then((data) => {
       if (data.success) {
+        // Memorizza il token nel localStorage
+        localStorage.setItem('jwtToken', data.token);
         setLoggedUser(data);
         emit('login', loggedUser);
         // Vai alla home dopo il login riuscito
@@ -56,7 +57,6 @@ function login() {
       error.value = 'Errore di autenticazione. Per favore, riprova.';
     });
 }
-
 
 
 
