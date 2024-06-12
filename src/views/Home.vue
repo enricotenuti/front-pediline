@@ -118,11 +118,11 @@ const imageLinks = [
   'https://www.elev8.ph/wp-content/uploads/2020/07/Staff-Icon1.png',
 ];
 
-onBeforeMount(fetchToken);
+// onBeforeMount(fetchToken);
 
-onMounted(() => {
-  fetchToken();
-  fetchAlerts();
+onMounted(async () => {
+  await fetchToken();
+  await fetchAlerts();
 
   console.log('Logged user:', loggedUser); // Debugging log
   
