@@ -61,6 +61,15 @@ const links = [
     // account e logout sono fatti a parte
   ]
 
+// controlla loggedUserRole con un watch
+
+const loggedUserRole = ref(loggedUser.role)
+watch(() => loggedUser.role, (newVal, oldVal) => {
+  loggedUserRole.value = newVal
+})
+
+
+
 const toggleDrawer = () => {
   drawer.value = !drawer.value
 }
