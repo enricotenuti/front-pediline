@@ -19,6 +19,8 @@ const TOKEN_URL = `${HOST}/token`;
 export default {
   async mounted() {
     try {
+      // Recupera il token dal localStorage
+      const token = localStorage.getItem('jwtToken');
       // Chiamata all'API per invalidare il token sul server
       await fetch('https://back-pediline.onrender.com/api/v1/token/logout', {
         method: 'POST',
