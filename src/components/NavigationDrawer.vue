@@ -39,7 +39,7 @@
 
       <v-list-item v-for="[icon, text, route] in links" :key="icon" :prepend-icon="icon" :title="text" :to="route"
         link></v-list-item>
-      <v-list-item v-if="loggedUser.role==admin" prepend-icon="mdi-antenna" title="Admin" to="/admin" link></v-list-item>
+      <v-list-item v-if="loggedUser.role=='admin'" prepend-icon="mdi-a" title="Admin" to="/admin" link></v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -60,15 +60,6 @@ const links = [
     ['mdi-check-circle', 'Gestione presenze', '/presenze'],
     // account e logout sono fatti a parte
   ]
-
-// controlla loggedUserRole con un watch
-
-const loggedUserRole = ref(loggedUser.role)
-watch(() => loggedUser.role, (newVal, oldVal) => {
-  loggedUserRole.value = newVal
-})
-
-
 
 const toggleDrawer = () => {
   drawer.value = !drawer.value
