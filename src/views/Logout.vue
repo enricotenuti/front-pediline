@@ -22,11 +22,13 @@ export default {
       // Chiamata all'API per invalidare il token sul server
       await fetch('https://back-pediline.onrender.com/api/v1/token/logout', {
         method: 'POST',
-        credentials: 'include'
+        headers: {
+    'Authorization': `Bearer ${token}`
+  }
       });
 
       // Rimuovi il cookie contenente il token
-      document.cookie = 'jwt=; Max-Age=0; path=/';
+      localStorage.removeItem('jwtToken');
 
       // Reindirizza alla pagina di login
       // window.location.href = '/login';
