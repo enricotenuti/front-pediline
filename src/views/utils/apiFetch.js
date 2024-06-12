@@ -120,52 +120,90 @@ async function updateSchool(id, body){
   return data;
 }
 
-// ----------------------------------- TOKEN 
+// ----------------------------------------- TOKEN
 
-async function fetchToken() {
-  try {
-    const response = await fetch(API_ENDPOINTS.TOKEN_URL, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
-      }
-    });
-
-    const data = await response.json();
-    if (!data.success) {
-      throw new Error(data.message);
-    }
-    console.log('User info data:', data);
-    if (data.loggedUser) {
-      await fetchUserInfo(data);
-      console.log('Dati utente:', data.loggedUser);
-    }
-
-  } catch (error) {
-    console.error('Errore durante la verifica del token:', error.message);
-    // window.location.href = "/login"; 
+function fetchToken() {
+  const token = localStorage.getItem('jwtToken');
+  if (!token) {
+    console.error('Token non presente nel localStorage.');
+    return;
   }
+  console.log('Token recuperato:', token);
+
+  fetch(API_ENDPOINTS.TOKEN_URL, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(response => {
+      if (response.status === 403) {
+        throw new Error('Failed to authenticate token.');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Data ricevuti:', data);
+      fetchUserInfo(data);
+    })
+    .catch(error => {
+      console.error('Errore durante la verifica del token:', error.message);
+    });
 }
+
+
 // ----------------------------------------- USER INFO
 
 async function fetchUserInfo(data) {
-  const response = await fetch(API_ENDPOINTS.USER_URL + `?email=${data.loggedUser.email}`);
-  const userInfo = await response.json();
-  //console.log('User info:', userInfo);
-  setLoggedUser(userInfo[0]);
-  loggedUser.token = data.token;
+  try {
+    const token = localStorage.getItem('jwtToken');
+    if (!token) {
+      throw new Error('Token non presente nel localStorage.');
+    }
+
+    const response = await fetch(API_ENDPOINTS.USER_URL + `?email=${data.loggedUser.email}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    const userInfo = await response.json();
+    console.log('User info:', userInfo);
+    if (!userInfo) {
+      throw new Error('Informazioni utente non trovate.');
+    }
+
+    setLoggedUser(userInfo[0]);
+    loggedUser.token = token;
+  } catch (error) {
+    console.error('Errore durante il recupero delle informazioni utente:', error.message);
+  }
 }
 
-async function fetchUserInfo(data) {
-  const response = await fetch(API_ENDPOINTS.USER_URL + `?email=${data.loggedUser.email}`, {
-    headers: {
-      'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
+async function updateUserInfo(id, body) {
+  try {
+    const token = localStorage.getItem('jwtToken');
+    if (!token) {
+      throw new Error('Token non presente nel localStorage.');
     }
-  });
-  const userInfo = await response.json();
-  //console.log('User info:', userInfo);
-  setLoggedUser(userInfo[0]);
-  loggedUser.token = data.token;
+
+    const response = await fetch(API_ENDPOINTS.USER_URL + `/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(body),
+    });
+
+    const data = await response.json();
+    console.log('User updated:', data);
+    return data;
+  } catch (error) {
+    console.error('Errore durante l\'aggiornamento delle informazioni utente:', error.message);
+    throw error;
+  }
 }
 
 

@@ -37,16 +37,15 @@ function login() {
   fetch(`${API_URL}/authenticate`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email: email.value, password: password.value }),
+    body: JSON.stringify({ email: email.value, password: password.value })
   })
     .then((resp) => resp.json())
     .then((data) => {
       if (data.success) {
-        // Memorizza il token nel localStorage
-        localStorage.setItem('jwtToken', data.token);
         setLoggedUser(data);
+        localStorage.setItem('jwtToken', data.token);
+        console.log('Token salvato nel localStorage:', localStorage.getItem('jwtToken'));
         emit('login', loggedUser);
-        // Vai alla home dopo il login riuscito
         router.push('/');
       } else {
         error.value = 'Errore di autenticazione. Per favore, riprova.';
