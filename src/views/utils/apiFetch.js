@@ -1,4 +1,4 @@
-const HOST = 'https://back-pediline.onrender.com';
+const HOST = 'https://back-pediline.onrender.com/api/v1';
 import { setLoggedUser, loggedUser, getInfo } from '../../states/loggedUser.js';
 
 const API_ENDPOINTS = {
