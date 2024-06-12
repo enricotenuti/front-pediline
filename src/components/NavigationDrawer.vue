@@ -39,7 +39,7 @@
 
       <v-list-item v-for="[icon, text, route] in links" :key="icon" :prepend-icon="icon" :title="text" :to="route"
         link></v-list-item>
-      <v-list-item v-if="loggedUser.role=='admin'" prepend-icon="mdi-a" title="Admin" to="/admin" link></v-list-item>
+      <v-list-item v-if="loggedUser.role=='admin'" prepend-icon="mdi-access-point" title="Admin" to="/admin" link></v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
