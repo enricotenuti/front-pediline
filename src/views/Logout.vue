@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import { clearLoggedUser } from '../states/loggedUser.js';
 const HOST = 'https://back-pediline.onrender.com/api/v1';
 const LINE_URL = `${HOST}/lines`;
 const STOP_URL = `${HOST}/stops`;
@@ -31,7 +32,7 @@ export default {
 
       // Rimuovi il cookie contenente il token
       localStorage.removeItem('jwtToken');
-
+      clearLoggedUser();
       // Reindirizza alla pagina di login
       // window.location.href = '/login';
     } catch (error) {
