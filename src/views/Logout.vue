@@ -29,7 +29,7 @@ export default {
       document.cookie = 'jwt=; Max-Age=0; path=/';
 
       // Reindirizza alla pagina di login
-      window.location.href = '/login';
+      // window.location.href = '/login';
     } catch (error) {
       console.error('Errore durante il logout:', error.message);
     }
